@@ -3,20 +3,32 @@
 (provide (all-defined-out))
 
 (define-language ares
-  (e
-   (+ e ...)
-   (- e ...)
-   (* e ...)
-   (/ e ...)
-   number
-   x
-   )
-  (x variable-not-otherwise-mentioned)
+  (expression
+   (assign-op expression ...)
+   (binary-op expression ...)
+   constant
+   identifier)
+
+  (assign-op = +=)
+
+  (binary-op + - * /)
+
+  (constant number)
+
+  (identifier
+   variable-not-otherwise-mentioned)
   )
 
 ; (1 + (a - (b * (c / d))))
 (redex-match
  ares
- e
+ expression
  (term (+ 1 (- a (* b (/ c d)))))
+ )
+
+; (+= a b)
+(redex-match
+ ares
+ expression
+ (term (+= a b))
  )
