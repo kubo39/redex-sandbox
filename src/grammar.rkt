@@ -3,6 +3,9 @@
 (provide (all-defined-out))
 
 (define-language ares
+  (expressions
+   (expression ...))
+
   (expression
    assign-expression)
 
@@ -89,8 +92,8 @@
 ;; ; (1 + (a - (b * (c / d))))
 ;; (redex-match
 ;;  ares
-;;  add-expression
-;;  (term (+ 1 (- a (* b (/ c d)))))
+;;  expressions
+;;  (term (1 + (a - (b * (c / d)))))
 ;;  )
 
 ; (a += b)
