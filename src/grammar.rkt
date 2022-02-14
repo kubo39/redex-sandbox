@@ -55,6 +55,16 @@
 
   (unary-expression
    (unary-op unary-expression)
+   pow-expression)
+
+  (pow-expression
+   postfix-expression
+   (^^ postfix-expression unary-expression))
+
+  (postfix-expression
+   primary-expression)
+
+  (primary-expression
    constant
    identifier)
 
@@ -142,4 +152,11 @@
  ares
  mul-expression
  (term (* a b))
+ )
+
+; (^^ a b)
+(redex-match
+ ares
+ pow-expression
+ (term (^^ a b))
  )
