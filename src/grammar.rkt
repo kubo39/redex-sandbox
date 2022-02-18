@@ -3,8 +3,8 @@
 (provide (all-defined-out))
 
 (define-language ares
-  (expressions
-   (expression ...))
+  (type
+   int)
 
   (expression
    assign-expression)
@@ -68,8 +68,9 @@
    primary-expression)
 
   (primary-expression
-   constant
-   identifier)
+   integer
+   identifier
+   (expression))
 
   (assign-op = +=)
   (oror-op ||)
@@ -83,8 +84,6 @@
   (unary-op & ++ -- * - + !)
   (pow-op ^^)
 
-  (constant number)
-
   (identifier
    variable-not-otherwise-mentioned)
   )
@@ -92,8 +91,8 @@
 ;; ; (1 + (a - (b * (c / d))))
 ;; (redex-match
 ;;  ares
-;;  expressions
-;;  (term (1 + (a - (b * (c / d)))))
+;;  expression
+;;  (term (1 + a - (b * (c / d))))
 ;;  )
 
 ; (a += b)
@@ -164,3 +163,27 @@
  pow-expression
  (term (a ^^ b))
  )
+
+(define-judgment-form ares
+  #:mode (types I I O)
+  #:contract (types ty expression type)
+
+  [(types ty expression_1 int)
+   (types ty expression_2 int)
+   ----------------------------
+   (types ty (expression_1 add-op expression_2) int)]
+  [----------------------------
+   (types ty integer int)])
+
+(define-metafunction ares
+  lookup : ty x -> t
+  [(lookup ([identifier t] ty) identifier) type]
+  [(lookup ([identifier_1 t] ty) identifier_0)
+   (lookup ty identifier_0)]
+  [(lookup () identifier) #f])
+
+(judgment-holds
+ (types ty
+       (1 + 1)
+       type)
+ type)
