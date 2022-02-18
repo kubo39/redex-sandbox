@@ -95,7 +95,7 @@
 ;; (redex-match
 ;;  ares
 ;;  expression
-;;  (term (1 + a - (b * (c / d))))
+;;  (term (1 + (a - (b * (c / d))))
 ;;  )
 
 ; (a += b)
