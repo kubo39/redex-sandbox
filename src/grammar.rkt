@@ -175,13 +175,6 @@
   [----------------------------
    (types ty integer int)])
 
-(define-metafunction ares
-  lookup : ty x -> t
-  [(lookup ([identifier t] ty) identifier) type]
-  [(lookup ([identifier_1 t] ty) identifier_0)
-   (lookup ty identifier_0)]
-  [(lookup () identifier) #f])
-
 (judgment-holds
  (types ty
        (1 + 1)
