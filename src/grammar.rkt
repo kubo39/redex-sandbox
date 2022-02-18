@@ -186,14 +186,26 @@
   [----------------------
    (types ty false bool)])
 
-(judgment-holds
- (types ty
-        (1 + 1)
-        type)
- type)
+(test-equal
+ (judgment-holds
+  (types ty
+         (1 + 1)
+         type)
+  type)
+ '(int))
 
-(judgment-holds
- (types ty
-        (1 == 1)
-        type)
- type)
+(test-equal
+ (judgment-holds
+  (types ty
+         (true + 1)
+         type)
+  type)
+ '())
+
+(test-equal
+ (judgment-holds
+  (types ty
+         (1 == 1)
+         type)
+  type)
+ '(bool))
