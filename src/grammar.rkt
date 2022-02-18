@@ -4,7 +4,8 @@
 
 (define-language ares
   (type
-   int)
+   int
+   bool)
 
   (expression
    assign-expression)
@@ -68,6 +69,8 @@
    primary-expression)
 
   (primary-expression
+   true
+   false
    integer
    identifier
    (expression))
@@ -172,11 +175,25 @@
    (types ty expression_2 int)
    ----------------------------
    (types ty (expression_1 add-op expression_2) int)]
-  [----------------------------
-   (types ty integer int)])
+  [(types ty expression_1 int)
+   (types ty expression_2 int)
+   ----------------------------
+   (types ty (expression_1 equal-op expression_2) bool)]
+  [------------------------
+   (types ty integer int)]
+  [---------------------
+   (types ty true bool)]
+  [----------------------
+   (types ty false bool)])
 
 (judgment-holds
  (types ty
-       (1 + 1)
-       type)
+        (1 + 1)
+        type)
+ type)
+
+(judgment-holds
+ (types ty
+        (1 == 1)
+        type)
  type)
