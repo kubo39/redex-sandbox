@@ -168,56 +168,56 @@
  )
 
 (define-judgment-form ares
-  #:mode (types I I O)
-  #:contract (types ty expression type)
+  #:mode (types I O)
+  #:contract (types expression type)
 
-  [(types ty expression_1 int)
-   (types ty expression_2 int)
+  [(types expression_1 int)
+   (types expression_2 int)
    ----------------------------
-   (types ty (expression_1 add-op expression_2) int)]
-  [(types ty expression_1 int)
-   (types ty expression_2 int)
+   (types (expression_1 add-op expression_2) int)]
+  [(types expression_1 int)
+   (types expression_2 int)
    ----------------------------
-   (types ty (expression_1 equal-op expression_2) bool)]
-  [(types ty expression_1 bool)
-   (types ty expression_2 bool)
+   (types (expression_1 equal-op expression_2) bool)]
+  [(types expression_1 bool)
+   (types expression_2 bool)
    ----------------------------
-   (types ty (expression_1 equal-op expression_2) bool)]
+   (types (expression_1 equal-op expression_2) bool)]
   [------------------------
-   (types ty integer int)]
+   (types integer int)]
   [---------------------
-   (types ty true bool)]
+   (types true bool)]
   [----------------------
-   (types ty false bool)])
+   (types false bool)])
 
 (test-equal
  (judgment-holds
-  (types ty
-         (1 + 1)
-         type)
+  (types
+   (1 + 1)
+   type)
   type)
  '(int))
 
 (test-equal
  (judgment-holds
-  (types ty
-         (true + 1)
-         type)
+  (types
+   (true + 1)
+   type)
   type)
  '())
 
 (test-equal
  (judgment-holds
-  (types ty
-         (1 == 1)
-         type)
+  (types
+   (1 == 1)
+   type)
   type)
  '(bool))
 
 (test-equal
  (judgment-holds
-  (types ty
-         (true == false)
-         type)
+  (types
+   (true == false)
+   type)
   type)
  '(bool))
