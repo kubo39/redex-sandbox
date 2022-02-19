@@ -179,6 +179,10 @@
    (types ty expression_2 int)
    ----------------------------
    (types ty (expression_1 equal-op expression_2) bool)]
+  [(types ty expression_1 bool)
+   (types ty expression_2 bool)
+   ----------------------------
+   (types ty (expression_1 equal-op expression_2) bool)]
   [------------------------
    (types ty integer int)]
   [---------------------
@@ -206,6 +210,14 @@
  (judgment-holds
   (types ty
          (1 == 1)
+         type)
+  type)
+ '(bool))
+
+(test-equal
+ (judgment-holds
+  (types ty
+         (true == false)
          type)
   type)
  '(bool))
