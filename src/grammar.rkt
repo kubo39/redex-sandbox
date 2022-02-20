@@ -7,6 +7,9 @@
    int
    bool)
 
+  (env ([x type] env)
+       ())
+
   (expression
    assign-expression)
 
@@ -168,56 +171,56 @@
  )
 
 (define-judgment-form ares
-  #:mode (types I O)
-  #:contract (types expression type)
+  #:mode (types I I O)
+  #:contract (types env expression type)
 
-  [(types expression_1 int)
-   (types expression_2 int)
+  [(types env expression_1 int)
+   (types env expression_2 int)
    ----------------------------
-   (types (expression_1 add-op expression_2) int)]
-  [(types expression_1 int)
-   (types expression_2 int)
+   (types env (expression_1 add-op expression_2) int)]
+  [(types env expression_1 int)
+   (types env expression_2 int)
    ----------------------------
-   (types (expression_1 equal-op expression_2) bool)]
-  [(types expression_1 bool)
-   (types expression_2 bool)
+   (types env (expression_1 equal-op expression_2) bool)]
+  [(types env expression_1 bool)
+   (types env expression_2 bool)
    ----------------------------
-   (types (expression_1 equal-op expression_2) bool)]
+   (types env (expression_1 equal-op expression_2) bool)]
   [------------------------
-   (types integer int)]
+   (types env integer int)]
   [---------------------
-   (types true bool)]
+   (types env true bool)]
   [----------------------
-   (types false bool)])
+   (types env false bool)])
 
 (test-equal
  (judgment-holds
-  (types
-   (1 + 1)
-   type)
+  (types ()
+         (1 + 1)
+         type)
   type)
  '(int))
 
 (test-equal
  (judgment-holds
-  (types
-   (true + 1)
-   type)
+  (types ()
+         (true + 1)
+         type)
   type)
  '())
 
 (test-equal
  (judgment-holds
-  (types
-   (1 == 1)
-   type)
+  (types ()
+         (1 == 1)
+         type)
   type)
  '(bool))
 
 (test-equal
  (judgment-holds
-  (types
-   (true == false)
-   type)
+  (types ()
+         (true == false)
+         type)
   type)
  '(bool))
