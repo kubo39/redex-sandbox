@@ -43,12 +43,11 @@
    variable-not-otherwise-mentioned)
   )
 
-;; ; (1 + (a - (b * (c / d))))
-;; (redex-match
-;;  ares
-;;  expression
-;;  (term (1 + (a - (b * (c / d))))
-;;  )
+; (1 + (a - (b * (c / d))))
+(redex-match
+ ares
+ expression
+ (term (/ (* (- (+ 1 a) b) c) d)))
 
 ; (a += b)
 (redex-match
