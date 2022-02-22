@@ -3,11 +3,12 @@
 (provide (all-defined-out))
 
 (define-language ares
-  (type
-   int
-   bool)
+  (type ::=
+        int
+        bool)
 
-  (env ([x type] env)
+  (env ::=
+       ([x type] env)
        ())
 
   (expression ::=
@@ -27,21 +28,19 @@
               (unary-op expression)
               (pow-op expression expression))
 
-  (assign-op = +=)
-  (oror-op ||)
-  (andand-op &&)
-  (xor-op ^)
-  (and-op &)
-  (equal-op == !=)
-  (shift-op << >>)
-  (add-op + -)
-  (mul-op * / &)
-  (unary-op & ++ -- * - + !)
-  (pow-op ^^)
+  (assign-op ::= = +=)
+  (oror-op ::= ||)
+  (andand-op ::= &&)
+  (xor-op ::= ^)
+  (and-op ::= &)
+  (equal-op ::= == !=)
+  (shift-op ::= << >>)
+  (add-op ::= + -)
+  (mul-op ::= * / %)
+  (unary-op ::= & ++ -- * - + !)
+  (pow-op ::= ^^)
 
-  (identifier
-   variable-not-otherwise-mentioned)
-  )
+  (identifier ::= variable-not-otherwise-mentioned))
 
 ; (1 + (a - (b * (c / d))))
 (redex-match
