@@ -24,7 +24,7 @@
               (shift-op expression expression)
               (add-op expression expression)
               (mul-op expression expression)
-              (unary-op expression expression)
+              (unary-op expression)
               (pow-op expression expression))
 
   (assign-op = +=)
@@ -109,6 +109,11 @@
  expression
  (term (^^ a b)))
 
+; (& a)
+(redex-match
+ ares
+ expression
+ (term (& a)))
 
 (define-judgment-form ares
   #:mode (types I I O)
