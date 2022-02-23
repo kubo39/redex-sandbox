@@ -5,13 +5,15 @@
 (define-language ares
   (type ::=
         int
-        bool)
+        bool
+        (-> type type))
 
   (env ::=
        ([x type] env)
        ())
 
   (expression ::=
+              (lambda (identifier type) expression)
               true
               false
               integer
@@ -113,6 +115,13 @@
  ares
  expression
  (term (& a)))
+
+; (lambda (x (-> int int) e)
+(redex-match
+ ares
+ expression
+ (term (lambda (a (-> int int)) (+ 1 2))))
+
 
 (define-judgment-form ares
   #:mode (types I I O)
