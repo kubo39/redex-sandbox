@@ -6,7 +6,7 @@
   (type ::=
         int
         bool
-        (-> type type))
+        (type -> type))
 
   (env ::=
        ([x type] env)
@@ -14,6 +14,7 @@
 
   (expression ::=
               (lambda (identifier type) expression)
+              (expression expression)
               true
               false
               integer
@@ -45,82 +46,108 @@
   (identifier ::= variable-not-otherwise-mentioned))
 
 ; (1 + (a - (b * (c / d))))
-(redex-match
- ares
- expression
- (term (/ (* (- (+ 1 a) b) c) d)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (/ (* (- (+ 1 a) b) c) d)))
+ #t)
 
 ; (a += b)
-(redex-match
- ares
- expression
- (term (+= a b)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (+= a b)))
+ #t)
 
 ; (a || b)
-(redex-match
- ares
- expression
- (term (|| a b)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (|| a b)))
+ #t)
 
 ; (a && b)
-(redex-match
- ares
- expression
- (term (&& a b)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (&& a b)))
+ #t)
 
 ; (a ^ b)
-(redex-match
- ares
- expression
- (term (^ a b)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (^ a b)))
+ #t)
 
 ; (a & b)
-(redex-match
- ares
- expression
- (term (& a b)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (& a b)))
+ #t)
 
 ; (a == b)
-(redex-match
- ares
- expression
- (term (== a b)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (== a b)))
+ #t)
 
 ; (a << b)
-(redex-match
- ares
- expression
- (term (<< a b)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (<< a b)))
+ #t)
 
 ; (a + b)
-(redex-match
- ares
- expression
- (term (+ a b)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (+ a b)))
+ #t)
 
 ; (a * b)
-(redex-match
- ares
- expression
- (term (* a b)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (* a b)))
+ #t)
 
 ; (a ^^ b)
-(redex-match
- ares
- expression
- (term (^^ a b)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (^^ a b)))
+ #t)
 
 ; (& a)
-(redex-match
- ares
- expression
- (term (& a)))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (& a)))
+ #t)
 
 ; (lambda (x (-> int int) e)
-(redex-match
- ares
- expression
- (term (lambda (a (-> int int)) (+ 1 2))))
+(test-equal
+ (redex-match?
+  ares
+  expression
+  (term (lambda (a (int -> int)) (+ a 2))))
+ #t)
 
 
 (define-judgment-form ares
